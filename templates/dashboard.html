@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — Spotify Insights{% endblock %}
+
+{% block nav_right %}
+<div class="nav-user">
+    {% if profile.avatar_url %}
+    <img src="{{ profile.avatar_url }}" alt="avatar" class="avatar">
+    {% endif %}
+    <span>{{ profile.display_name or profile.id }}</span>
+    <a href="/logout" class="btn btn-sm">Logout</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <!-- Insights cards -->
+    <section class="insights-row" id="insights-row">
+        <div class="card stat-card" id="card-obscurity">
+            <h3>Obscurity Score</h3>
+            <div class="stat-value" id="obscurity-score">—</div>
+            <p class="stat-label">Lower = more underground</p>
+        </div>
+        <div class="card stat-card" id="card-diversity">
+            <h3>Genre Diversity</h3>
+            <div class="stat-value" id="genre-diversity">—</div>
+            <p class="stat-label">Unique genres in your top artists</p>
+        </div>
+        <div class="card stat-card" id="card-mainstream">
+            <h3>Mainstream %</h3>
+            <div class="stat-value" id="mainstream-pct">—</div>
+            <p class="stat-label">Artists with popularity > 70</p>
+        </div>
+    </section>
+
+    <!-- Time range selector -->
+    <div class="time-selector">
+        <button class="btn btn-time active" data-range="short_term">Last 4 Weeks</button>
+        <button class="btn btn-time" data-range="medium_term">Last 6 Months</button>
+        <button class="btn btn-time" data-range="long_term">All Time</button>
+    </div>
+
+    <div class="charts-grid">
+        <!-- Top Artists chart -->
+        <section class="card">
+            <h2>Top Artists</h2>
+            <canvas id="artists-chart"></canvas>
+        </section>
+
+        <!-- Top Genres chart -->
+        <section class="card">
+            <h2>Top Genres</h2>
+            <canvas id="genres-chart"></canvas>
+        </section>
+    </div>
+
+    <!-- Top Tracks list -->
+    <section class="card">
+        <h2>Top Tracks</h2>
+        <div class="tracks-list" id="tracks-list">
+            <p class="loading">Loading tracks...</p>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/dashboard.js?v=3"></script>
+{% endblock %}
